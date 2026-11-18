@@ -104,6 +104,41 @@ Cambia solo `verify`.
 
 `eval/bench/gold_chunks.json` marca el pasaje que responde 14 de las 25 preguntas de muestra dentro de los 27 PDFs públicos de `data/public_pdfs/`. Las otras 11 dependen de documentos que no están en el banco local (WinStat, ThinkMore, *Fairness by Brute Force*, ONB-MACF…) o de datos en figuras. Con eso, `eval/run_local.py --retrieval-only` mide recall@k y MRR por estrategia sin OLMo; los resultados quedan en `experiments/runs/recall-local/`.
 
+### Resultados (18 nov 2026)
+
+Medición sin OLMo, con el bge y el reranker reales en CPU, sobre las 14 preguntas con gold (6 DONES, 8 IA) y las estrategias **sin modificar**:
+
+```bash
+python eval/run_local.py --configs configs/e1.yaml configs/e2.yaml configs/e3.yaml --corpus data/public_pdfs --retrieval-only --out experiments/runs/recall-local --ids 2 3 5 6 7 8 11 14 16 20 22 23 24 25
+```
+
+| Estrategia | Recall@1 | **Recall@5** | Recall@20 | MRR | DONES r@5 | IA r@5 |
+|---|---|---|---|---|---|---|
+| E1 | 14 % | **29 %** | 50 % | 0,21 | 33 % | 25 % |
+| E2 | 21 % | **36 %** | 57 % | 0,27 | 50 % | 25 % |
+| E3 | 7 % | **29 %** | 43 % | 0,16 | 33 % | 25 % |
+
+Puesto del pasaje correcto en la lista final de cada estrategia ("—" = fuera de la lista: 50 candidatos en E1 y E2, 20 en E3 tras el reranker):
+
+| Pregunta | E1 | E2 | E3 |
+|---|---|---|---|
+| #3 Be-7 (constante de desintegración) | 1 | 1 | 4 |
+| #6 Caudal del intercambiador | 2 | 1 | 1 |
+| #7 Trampa de nitrógeno | 17 | 4 | — |
+| #8 Bypass del ICS | 13 | 10 | 14 |
+| #22 SimCLR | — | 14 | — |
+| #23 (α,f)-Byzantine | 5 | 4 | 8 |
+| #24 GPAIS | 1 | 1 | 4 |
+| #25 Mamba | 6 | 6 | 2 |
+| #2, #5, #11, #14, #16, #20 | — | — | — |
+
+**Lectura:**
+- **E2 mejora a E1**, sobre todo en DONES (recall@5 de 33 % a 50 %), como se esperaba de BM25 con siglas y valores exactos.
+- **E3 no mejora a E2** en esta muestra: el reranker de propósito general reordena peor en varias preguntas (#3, #7, #24) y mejora otras (#25). E3 además deja solo 20 candidatos tras el reranker y el filtro de duplicados.
+- **6 de las 14 preguntas no encuentran su pasaje en ninguna estrategia.** Hallazgo: en PDFs a dos columnas, PyMuPDF (`sort=True`) a veces intercala líneas de ambas columnas, lo que ensucia los fragmentos; afecta por igual a E1-E6.
+
+**Límites:** con 14 preguntas cada una vale ~7 puntos (E2 vs. E3 es una sola pregunta de diferencia); el banco local es una aproximación del corpus privado de Codabench. Estas cifras sirven para **explicar** los scores de Codabench, no para reemplazarlos.
+
 ## 9.5 Registro de envíos
 
 Ver [`../../experiments/submissions.md`](../../experiments/submissions.md).
