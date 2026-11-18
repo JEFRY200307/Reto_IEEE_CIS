@@ -1,0 +1,11 @@
+# Prueba de humo de la instancia GPU (~10-15 min, < USD 1 en spot). Lanzar con:
+#   infra/aws/push.sh smoke
+#   infra/aws/launch.sh smoke --max-hours 1
+# Cada línea es un comando; se ejecuta desde la raíz del repo con el entorno /opt/dsqa-venv activo.
+# Variables disponibles: DSQA_SESSION, DSQA_BUCKET, AWS_REGION, HF_HOME, HF_HUB_CACHE.
+# Escribir resultados en experiments/runs/$DSQA_SESSION/ (se suben solos a S3).
+
+mkdir -p "experiments/runs/$DSQA_SESSION" && nvidia-smi | tee "experiments/runs/$DSQA_SESSION/nvidia-smi.txt"
+python -c "import torch; print('cuda:', torch.cuda.is_available(), torch.cuda.get_device_name(0))"
+python -c "from transformers import AutoTokenizer as T; t = T.from_pretrained('allenai/Olmo-3.1-32B-Instruct'); print('tokenizer ok, vocab', len(t))"
+python -c "import time, torch; from transformers import AutoModelForCausalLM as M; s = time.time(); m = M.from_pretrained('allenai/Olmo-3.1-32B-Instruct', dtype=torch.bfloat16, device_map='cuda'); print('OLMo cargado en', round(time.time() - s), 's; VRAM', round(torch.cuda.max_memory_allocated() / 1e9, 1), 'GB')" | tee "experiments/runs/$DSQA_SESSION/olmo-load.txt"

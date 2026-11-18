@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Artefactos pesados (viven en S3 o se regeneran)
+models/
+data/
+dist/
+*.zip
+experiments/runs/
+
+# AWS: configuración generada por dsqa-infra y archivos temporales de los scripts
+infra/aws/config.env
+infra/aws/.tmp/
+
+# Sistema
+.DS_Store
+Thumbs.db

@@ -1,0 +1,16 @@
+# Preparación única en una instancia CPU (guía §8.5). bootstrap.sh ya creó /opt/dsqa-venv
+# y descargó OLMo desde Hugging Face (no estaba en S3). Lanzar con:
+#   infra/aws/push.sh prep
+#   infra/aws/launch.sh prep --template prep --keep-alive --max-hours 2
+# Al terminar (SUMMARY.txt en S3):  infra/aws/ami.sh <instance-id>
+
+# Modelos auxiliares en la caché de Hugging Face
+python -c "from sentence_transformers import SentenceTransformer as S; S('BAAI/bge-base-en-v1.5'); print('embedder ok')"
+python -c "from FlagEmbedding import FlagReranker as R; R('BAAI/bge-reranker-base'); print('reranker ok')"
+
+# Subir toda la caché (OLMo + auxiliares) a S3: las sesiones la descargan de ahí
+aws s3 sync "$HF_HUB_CACHE/" "s3://$DSQA_BUCKET/hf-cache/" --only-show-errors
+aws s3 ls "s3://$DSQA_BUCKET/hf-cache/" --summarize --human-readable --recursive | tail -2
+
+# Quitar pesos y datos del disco antes de crear la AMI (los pesos viven en S3, ADR-15)
+rm -rf "$HF_HOME" /opt/dsqa/repo/data
