@@ -42,4 +42,9 @@ if $WITH_CORPUS && [[ -d data/public_pdfs ]]; then
   awsr s3 sync data/public_pdfs "s3://$DSQA_BUCKET/corpus/" --only-show-errors
 fi
 
+if [[ -d models ]]; then
+  log "sincronizando modelos auxiliares locales a s3://$DSQA_BUCKET/models/"
+  awsr s3 sync models "s3://$DSQA_BUCKET/models/" --only-show-errors
+fi
+
 log "listo. Siguiente paso: infra/aws/launch.sh $SESSION"

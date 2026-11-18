@@ -1,0 +1,19 @@
+# TODAS LAS ESTRATEGIAS E0-E6 + juez local + calibración CMA-ES + E5/E6 calibradas + reporte.
+# GPU p5.4xlarge, ~1,5-2 h (OLMo se carga una sola vez para todo).
+#   infra/aws/push.sh estrategias
+#   infra/aws/launch.sh estrategias --max-hours 3
+#   infra/aws/pull.sh estrategias      → experiments/runs/estrategias/report/ablation.md
+# Requisitos: preparación hecha (modelos y corpus en S3). gold_chunks.json completo para recall y OWA.
+
+# 1. E0 a E6 sobre las 25 preguntas de muestra, cada respuesta juzgada con el mismo OLMo
+python eval/run_local.py --configs configs/e0.yaml configs/e1.yaml configs/e2.yaml configs/e3.yaml configs/e4.yaml configs/e5.yaml configs/e6.yaml --corpus data/public_pdfs --model-id allenai/Olmo-3.1-32B-Instruct --out "experiments/runs/$DSQA_SESSION" --resume --judge olmo
+
+# 2. Calibración CMA-ES (CPU) con las trazas de E6; parámetros a resources/calibrated/
+python offline/calibrate_cmaes.py --run "experiments/runs/$DSQA_SESSION/e6" --target both --save-to resources/calibrated
+
+# 3. E5 y E6 con los parámetros calibrados (si la calibración no se aceptó, usan los de experto)
+python eval/run_local.py --configs configs/variants/e5-calibrado.yaml configs/variants/e6-calibrado.yaml --corpus data/public_pdfs --model-id allenai/Olmo-3.1-32B-Instruct --out "experiments/runs/$DSQA_SESSION" --resume --judge olmo
+
+# 4. Guardar parámetros calibrados y generar el reporte (tabla por estrategia + saltos con McNemar)
+mkdir -p "experiments/runs/$DSQA_SESSION/calibrated" && cp -r resources/calibrated/. "experiments/runs/$DSQA_SESSION/calibrated/" 2>/dev/null; true
+python eval/report.py --runs "experiments/runs/$DSQA_SESSION" --out "experiments/runs/$DSQA_SESSION/report"

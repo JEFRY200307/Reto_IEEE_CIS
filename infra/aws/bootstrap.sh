@@ -77,6 +77,8 @@ say "descargando código"
 aws s3 sync "$S3/code/" "$REPO/" --only-show-errors --delete --exclude "experiments/runs/*" --exclude "data/*"
 say "descargando corpus público (si existe)"
 aws s3 sync "$S3/corpus/" "$REPO/data/public_pdfs/" --only-show-errors
+say "descargando modelos auxiliares: embedder, reranker, MiniLM, Docling (si existen)"
+aws s3 sync "$S3/models/" "$REPO/models/" --only-show-errors
 say "recuperando resultados anteriores de la sesión (si existen)"
 aws s3 sync "$S3/runs/$DSQA_SESSION/" "$SESSION_DIR/" --only-show-errors --exclude "logs/*" --exclude "SUMMARY.txt"
 mkdir -p "$LOGS"

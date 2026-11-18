@@ -1,0 +1,10 @@
+# QA SINTÉTICO (150 preguntas) desde los PDFs públicos, filtrando las que OLMo ya responde sin contexto,
+# y una pasada de E1 y E3 sobre ellas para tener más preguntas en la estadística. GPU, ~1,5-2 h.
+#   infra/aws/push.sh sinteticas
+#   infra/aws/launch.sh sinteticas --max-hours 3
+#   infra/aws/pull.sh sinteticas
+# Después: copiar synthetic_qa.json y synthetic_qa_gold.json a eval/bench/ en la laptop (revisar el 20 % a mano).
+
+mkdir -p "experiments/runs/$DSQA_SESSION" && python offline/build_synthetic_qa.py --pdfs data/public_pdfs --n 150 --out "experiments/runs/$DSQA_SESSION/synthetic_qa.json" --filter-zero-shot
+python eval/run_local.py --configs configs/e1.yaml configs/e3.yaml --bench eval/bench/sample_qa.json "experiments/runs/$DSQA_SESSION/synthetic_qa.json" --gold "experiments/runs/$DSQA_SESSION/synthetic_qa_gold.json" --corpus data/public_pdfs --model-id allenai/Olmo-3.1-32B-Instruct --out "experiments/runs/$DSQA_SESSION" --resume --judge olmo
+python eval/report.py --runs "experiments/runs/$DSQA_SESSION" --out "experiments/runs/$DSQA_SESSION/report"

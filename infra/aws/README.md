@@ -22,7 +22,22 @@ Scripts para correr OLMo 3.1 32B en una instancia GPU **desechable**: se sube el
 | `ami.sh <instance-id>` | Laptop | Crea la AMI propia desde la instancia de preparación y la termina |
 | `bootstrap.sh` | Instancia | User data: prepara la máquina, ejecuta los trabajos, sube resultados, apaga |
 | `watchdog.sh` | Instancia | Cada 5 min: si no hay trabajo y la GPU está inactiva 20 min, guarda y apaga |
-| `jobs/*.txt` | Instancia | Listas de trabajos: `prep.txt` (preparación), `smoke.txt` (prueba de humo) |
+| `jobs/*.txt` | Instancia | Listas de trabajos listas para usar (tabla de abajo) |
+
+## Sesiones listas para usar
+
+Cada una se lanza igual: `push.sh <sesión>` → `launch.sh <sesión> [opciones]` → `pull.sh <sesión>`.
+
+| Orden | Sesión | Instancia | Qué hace | Duración aprox. |
+|---|---|---|---|---|
+| 1 | `prep` | CPU, `--template prep --keep-alive --max-hours 2` | Descarga OLMo, los modelos auxiliares de todas las estrategias y los 29 PDFs públicos; amplía el glosario; sube todo a S3. Luego `ami.sh <id>` | 45-60 min |
+| 2 | `smoke` | GPU, `--max-hours 1` | Confirma que la H100 carga OLMo | 15 min |
+| 3 | `estrategias` | GPU, `--max-hours 3` | E0-E6 + juez local + calibración CMA-ES + E5/E6 calibradas + reporte con saltos (McNemar) | 1,5-2 h |
+| 4 | `ablaciones` | GPU, `--max-hours 3` | E6 sin cada componente (s5, OWA, reranker, verificación, PoT, filtro) | 1-1,5 h |
+| 5 | `sinteticas` | GPU, `--max-hours 3` | 150 preguntas sintéticas + E1/E3 sobre ellas | 1,5-2 h |
+| 6 | `ensayo-general` | GPU, `--max-hours 2` | Construye los 7 zips y prueba el elegido como Codabench, 50 preguntas cronometradas | 45-60 min |
+
+Resultados en `experiments/runs/<sesión>/`: `report/ablation.md` (tabla y saltos), y por estrategia `answers.jsonl`, `traces.jsonl`, `metrics.json`, `retrieval_metrics.json` y `summary.json` (incluye el tiempo estimado para 50 preguntas).
 
 ## Requisitos en la laptop
 

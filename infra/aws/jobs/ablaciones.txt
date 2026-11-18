@@ -1,0 +1,7 @@
+# ABLACIÓN LEAVE-ONE-OUT sobre E6: qué aporta cada componente en el sistema completo. GPU, ~1-1,5 h.
+#   infra/aws/push.sh ablaciones
+#   infra/aws/launch.sh ablaciones --max-hours 3
+#   infra/aws/pull.sh ablaciones
+
+python eval/run_local.py --configs configs/e6.yaml configs/ablations/e6-sin-s5.yaml configs/ablations/e6-rrf.yaml configs/ablations/e6-sin-reranker.yaml configs/ablations/e6-sin-verificacion.yaml configs/ablations/e6-sin-pot.yaml configs/ablations/e6-sin-filtro-doc.yaml --corpus data/public_pdfs --model-id allenai/Olmo-3.1-32B-Instruct --out "experiments/runs/$DSQA_SESSION" --resume --judge olmo
+python eval/report.py --runs "experiments/runs/$DSQA_SESSION" --out "experiments/runs/$DSQA_SESSION/report"

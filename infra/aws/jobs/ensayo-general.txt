@@ -1,0 +1,9 @@
+# ENSAYO GENERAL antes de un envío: construye TODOS los zips (E0-E6) y prueba el elegido como Codabench
+# (zip descomprimido en carpeta limpia, red bloqueada, OLMo real, 50 preguntas cronometradas). GPU, ~45-60 min.
+# Cambia S=e3 por la estrategia que vas a enviar.
+#   infra/aws/push.sh ensayo-general
+#   infra/aws/launch.sh ensayo-general --max-hours 2
+#   infra/aws/pull.sh ensayo-general   → los zips quedan en experiments/runs/ensayo-general/dist/
+
+python scripts/build_all.py --out "experiments/runs/$DSQA_SESSION/dist" --allow-dirty
+S=e3; python scripts/check_submission.py experiments/runs/$DSQA_SESSION/dist/dsqa_${S}_*.zip --smoke --corpus data/public_pdfs --model-id allenai/Olmo-3.1-32B-Instruct --n 50 --timed | tee "experiments/runs/$DSQA_SESSION/ensayo-$S.log"
