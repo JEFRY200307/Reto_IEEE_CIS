@@ -34,6 +34,9 @@ class SentenceTransformerEncoder:
         self.model.max_seq_length = max_seq_length
         if fp16 and device.startswith("cuda"):
             self.model.half()
+        elif not device.startswith("cuda"):
+            # Los pesos vienen en fp16; en CPU fp16 es emulado y muy lento: se pasa a fp32.
+            self.model.float()
         self.batch_size = batch_size
         # Instrucción de consulta de BGE (vacía para MiniLM en E0); viene de la config.
         self.query_instruction = query_instruction

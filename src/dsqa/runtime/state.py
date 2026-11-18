@@ -156,6 +156,34 @@ def build_chunks(raw_docs, cfg: Config, lexicon: DomainLexicon) -> tuple[dict[st
     return documents, children, parents
 
 
+def preimport(cfg: Config, need_llm: bool) -> list[str]:
+    """Importa en el hilo principal las librerías que luego usan varios hilos. Devuelve las importadas."""
+    import importlib
+
+    mods = []
+    if need_llm and "llm" not in FACTORIES and os.environ.get("DSQA_LLM_BACKEND", "hf").lower() == "hf":
+        mods += ["torch", "transformers", "accelerate"]
+        if cfg.generate.quantization != "none":
+            mods.append("bitsandbytes")
+    if "dense" in cfg.retrieval.retrievers and "encoder" not in FACTORIES \
+            and os.environ.get("DSQA_ENCODER_BACKEND", "").lower() != "hash":
+        mods += ["torch", "transformers", "sentence_transformers"]
+    if cfg.rerank.enabled and "scorer" not in FACTORIES and os.environ.get("DSQA_RERANKER_BACKEND", "").lower() != "overlap":
+        mods += ["torch", "transformers", "FlagEmbedding"]
+    done = []
+    for name in dict.fromkeys(mods):
+        try:
+            importlib.import_module(name)
+            if name == "transformers":
+                # Los submódulos que cargan los modelos, también aquí.
+                importlib.import_module("transformers.modeling_utils")
+                importlib.import_module("transformers.models.auto.modeling_auto")
+            done.append(name)
+        except Exception as exc:  # el error real se verá al usar el componente
+            log.warning("no se pudo importar %s: %s", name, exc)
+    return done
+
+
 def build_resources(corpus_dir: str, model_id: str | None, cfg: Config, root: Path) -> Resources:
     root = Path(root)
     res = Resources(root=root, corpus_dir=corpus_dir)
@@ -164,7 +192,13 @@ def build_resources(corpus_dir: str, model_id: str | None, cfg: Config, root: Pa
     # 1. La extracción arranca primero: en Linux hace fork antes de que exista cualquier hilo.
     job = _safe(errors, "extracción", lambda: ExtractionJob(corpus_dir, cfg.ingest, root))
 
-    # 2. OLMo en paralelo con la ingesta (ADR-04).
+    # 2. Librerías pesadas importadas UNA vez en el hilo principal. Si el hilo de OLMo y el índice
+    #    denso importan transformers/accelerate a la vez, Python deja módulos a medio inicializar
+    #    ("partially initialized module ... circular import") y fallan los dos.
+    with CLOCK.stage("init_imports"):
+        preimport(cfg, need_llm=bool(model_id))
+
+    # 3. OLMo en paralelo con la ingesta (ADR-04).
     llm_box: dict[str, Any] = {}
 
     def _load() -> None:

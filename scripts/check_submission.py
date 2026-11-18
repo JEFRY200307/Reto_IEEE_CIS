@@ -117,16 +117,20 @@ questions = json.load(open(qfile, encoding="utf-8"))
 t0 = time.monotonic()
 spec = importlib.util.spec_from_file_location("main", root + "/main.py")
 main = importlib.util.module_from_spec(spec); sys.modules["main"] = main; spec.loader.exec_module(main)
-bad = 0
+bad = fallback = 0
 for i, q in enumerate(questions, 1):
     t = time.monotonic()
     out = main.answer(q["question"], corpus, model_id)
     ok = isinstance(out, str) and out.strip() != ""
+    # El texto fijo N4 indica que OLMo o el paquete fallaron aunque la respuesta sea un str.
+    fb = ok and (out.startswith("Based on the technical documentation on") or out.startswith("Based on the technical documentation, regarding"))
     bad += 0 if ok else 1
-    print(json.dumps({"i": i, "id": q.get("id"), "ok": ok, "seconds": round(time.monotonic() - t, 2),
+    fallback += 1 if fb else 0
+    print(json.dumps({"i": i, "id": q.get("id"), "ok": ok, "fallback_N4": fb, "seconds": round(time.monotonic() - t, 2),
                       "answer": (out[:160] if isinstance(out, str) else repr(out))}, ensure_ascii=False), flush=True)
-print(json.dumps({"total_seconds": round(time.monotonic() - t0, 1), "n": len(questions), "bad": bad}), flush=True)
-sys.exit(1 if bad else 0)
+print(json.dumps({"total_seconds": round(time.monotonic() - t0, 1), "n": len(questions), "bad": bad,
+                  "fallback_N4": fallback}), flush=True)
+sys.exit(1 if bad else (2 if fallback else 0))
 """
 
 
@@ -139,19 +143,24 @@ def smoke(zip_path: Path, corpus: Path, model_id: str, bench: Path, n: int, time
             zf.extractall(root)
         qfile = Path(tmp) / "questions.json"
         qfile.write_text(json.dumps(questions), encoding="utf-8")
-        env = {**os.environ, "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1", "PYTHONIOENCODING": "utf-8"}
+        env = {**os.environ, "HF_HUB_OFFLINE": "1", "TRANSFORMERS_OFFLINE": "1", "PYTHONIOENCODING": "utf-8",
+               "DSQA_LOG_LEVEL": os.environ.get("DSQA_LOG_LEVEL", "INFO")}
         print(f"prueba de humo: {n} preguntas, corpus={corpus}, model_id={model_id}")
         proc = subprocess.run([sys.executable, "-c", _SMOKE, str(root), str(corpus.resolve()), model_id, str(qfile)],
-                              cwd=tmp, env=env, text=True, capture_output=True)
+                              cwd=tmp, env=env, text=True, encoding="utf-8", errors="replace", capture_output=True)
         print(proc.stdout)
-        if proc.returncode != 0:
+        # Log del sistema (inicialización, niveles de respaldo, errores) sin el ruido de librerías.
+        log = [ln for ln in proc.stderr.splitlines() if "[dsqa]" in ln or "Error" in ln or "Traceback" in ln]
+        print("--- log de dsqa ---\n" + "\n".join(log[-40:]) if log else "--- sin log de dsqa ---")
+        if proc.returncode == 1:
             print(proc.stderr[-3000:])
+        if proc.returncode == 2:
+            print("AVISO: alguna respuesta salió del respaldo N4 (texto fijo): OLMo o el pipeline fallaron. Ver el log.")
         if timed and proc.stdout.strip():
             last = json.loads(proc.stdout.strip().splitlines()[-1])
             per_q = last["total_seconds"] / max(1, last["n"])
-            print(f"tiempo total {last['total_seconds']:.0f} s (incluye inicialización); "
-                  f"estimado para 50 preguntas ≈ {last['total_seconds'] / 60:.1f} min si n=50 "
-                  f"(media {per_q:.1f} s/pregunta). Objetivo: ≤ 45 min.")
+            print(f"tiempo total {last['total_seconds']:.0f} s para {last['n']} preguntas (incluye inicialización); "
+                  f"media {per_q:.1f} s/pregunta. Objetivo en Codabench: ≤ 45 min para ~50 preguntas.")
         return proc.returncode == 0
 
 

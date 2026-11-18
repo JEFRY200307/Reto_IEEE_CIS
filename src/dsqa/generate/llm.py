@@ -37,10 +37,12 @@ class HFLLM:
                 BitsAndBytesConfig(load_in_4bit=True, bnb_4bit_compute_dtype=torch.bfloat16, bnb_4bit_quant_type="nf4")
                 if quantization == "4bit" else BitsAndBytesConfig(load_in_8bit=True)
             )
+        # bf16 en GPU (Codabench, ADR-01). Sin GPU, bf16 es emulado y muy lento: fp32 (solo pruebas locales).
+        dtype = torch.bfloat16 if torch.cuda.is_available() else torch.float32
         try:
-            self.model = AutoModelForCausalLM.from_pretrained(model_id, dtype=torch.bfloat16, **kwargs)
+            self.model = AutoModelForCausalLM.from_pretrained(model_id, dtype=dtype, **kwargs)
         except TypeError:  # transformers < 4.56 usa torch_dtype
-            self.model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=torch.bfloat16, **kwargs)
+            self.model = AutoModelForCausalLM.from_pretrained(model_id, torch_dtype=dtype, **kwargs)
         self.model.eval()
         self.pad_id = self.tokenizer.pad_token_id if self.tokenizer.pad_token_id is not None else self.tokenizer.eos_token_id
 
