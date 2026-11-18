@@ -30,6 +30,21 @@ load_config() {
   : "${LAUNCH_TEMPLATE:?falta LAUNCH_TEMPLATE en config.env}"
   MAX_HOURS_DEFAULT="${MAX_HOURS_DEFAULT:-3}"
   export AWS_REGION DSQA_BUCKET
+  # Perfil de la CLI del proyecto: evita usar por error las credenciales por defecto de otra cuenta.
+  if [[ -n "${AWS_PROFILE:-}" ]]; then
+    export AWS_PROFILE
+  fi
+  check_account
+}
+
+# Se detiene si las credenciales activas no son de la cuenta esperada (AWS_ACCOUNT_ID en config.env).
+check_account() {
+  [[ -n "${AWS_ACCOUNT_ID:-}" ]] || { warn "config.env no define AWS_ACCOUNT_ID: no se comprueba la cuenta"; return 0; }
+  local actual
+  actual="$(AWS_PAGER="" aws sts get-caller-identity --query Account --output text 2>/dev/null | tr -d '\r')" \
+    || die "no se pudieron leer las credenciales (perfil '${AWS_PROFILE:-default}'). ¿Ejecutaste aws configure --profile ${AWS_PROFILE:-dsqa}?"
+  [[ "$actual" == "$AWS_ACCOUNT_ID" ]] \
+    || die "las credenciales son de la cuenta $actual, pero config.env espera $AWS_ACCOUNT_ID. Revisa AWS_PROFILE."
 }
 
 # aws con la región del proyecto y sin paginador interactivo.
