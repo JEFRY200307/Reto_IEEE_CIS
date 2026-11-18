@@ -1,6 +1,6 @@
 # 8. Guía de despliegue (AWS + Codabench)
 
-[← Calidad y pruebas](07-calidad-y-pruebas.md) · [Índice](README.md)
+[← Calidad y pruebas](07-calidad-y-pruebas.md) · [Índice](README.md) · Siguiente: [Estrategias implementadas →](09-estrategias-implementadas.md)
 
 Esta guía explica cómo montar el entorno de AWS para correr OLMo 3.1 32B y cómo llevar cada versión del sistema hasta un envío en Codabench, **gastando lo mínimo**. Las decisiones que la justifican están en [ADR-14](ADR/ADR-14-computo-aws-p5-spot.md) a [ADR-17](ADR/ADR-17-control-de-costos-aws.md); los scripts, en [SPEC-031](spec/SPEC-031-ejecucion-remota-aws.md).
 

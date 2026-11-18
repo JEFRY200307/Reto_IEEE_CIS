@@ -32,6 +32,7 @@ Si algo de esta carpeta contradice las reglas oficiales, **mandan las reglas ofi
 | 6 | [06-criterios-de-aceptacion.md](06-criterios-de-aceptacion.md) | Criterios verificables por requisito, por estrategia y por envío; matriz de trazabilidad |
 | 7 | [07-calidad-y-pruebas.md](07-calidad-y-pruebas.md) | Modelo de calidad, estrategia de pruebas, métricas, protocolo experimental, puertas de calidad, gestión de riesgos |
 | 8 | [08-guia-de-despliegue.md](08-guia-de-despliegue.md) | Montar AWS al menor costo (p5.4xlarge spot, S3, sesiones desechables), ciclo de una sesión, envío a Codabench, plan de sesiones, solución de problemas |
+| 9 | [09-estrategias-implementadas.md](09-estrategias-implementadas.md) | Cada estrategia E0-E6 tal como quedó implementada: configuración exacta, modelos del zip, validación local y score en Codabench |
 | — | [ADR/](ADR/README.md) | 18 decisiones de arquitectura, una por archivo |
 | — | [spec/](spec/README.md) | 31 especificaciones atómicas, una por funcionalidad |
 
