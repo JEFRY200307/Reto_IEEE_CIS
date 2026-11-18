@@ -30,6 +30,9 @@ class CrossEncoderScorer:
 
             self._flag = FlagReranker(str(model_dir), use_fp16=torch.cuda.is_available())
             self._ce = None
+            if not torch.cuda.is_available() and getattr(self._flag, "model", None) is not None:
+                # Pesos guardados en fp16: en CPU fp16 es emulado (~9× más lento); solo pruebas locales.
+                self._flag.model.float()
         except Exception as exc:
             log.warning("FlagReranker no disponible (%s); uso CrossEncoder", exc)
             from sentence_transformers import CrossEncoder
