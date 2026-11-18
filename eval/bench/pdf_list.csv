@@ -1,0 +1,30 @@
+url,filename,domain,license,note
+https://arxiv.org/pdf/2509.03236,onesearch_2509.03236.pdf,AI,arXiv,OneSearch e-commerce generative search (q11)
+https://www.preprints.org/manuscript/202511.0197/v1/download,winstat_preprints_202511.0197.pdf,AI,Preprints.org CC BY,WinStat y WinStatFlex (q15 q19)
+https://arxiv.org/pdf/2307.14283,gpais_2307.14283.pdf,AI,arXiv,GPAIS definition and taxonomy (q24)
+https://arxiv.org/pdf/2406.02929v1,zerodiff_v1_2406.02929v1.pdf,AI,arXiv,ZeroDiff v1 con generador de representaciones DRG (q20)
+https://arxiv.org/pdf/2406.02929,zerodiff_iclr25_2406.02929.pdf,AI,arXiv,ZeroDiff ICLR 2025 (versión posterior; homónimo)
+https://arxiv.org/pdf/2602.12401,zerodiffpp_2602.12401.pdf,AI,arXiv,ZeroDiff++ (homónimo cercano)
+https://arxiv.org/pdf/2312.00752,mamba_2312.00752.pdf,AI,arXiv,Mamba selective copying (q25)
+https://arxiv.org/pdf/2002.05709,simclr_2002.05709.pdf,AI,arXiv,SimCLR augmentations (q22)
+https://arxiv.org/pdf/2211.06154,revel_2211.06154.pdf,AI,arXiv,REVEL local linear explanations (q14)
+https://arxiv.org/pdf/2503.21244,byzantine_fl_2503.21244.pdf,AI,arXiv,(alpha f)-Byzantine resilience in federated learning (q23)
+https://arxiv.org/pdf/1703.02757,krum_1703.02757.pdf,AI,arXiv,Blanchard et al. Krum (contexto q23)
+https://arxiv.org/pdf/math/0509374,lush_numerical_index_math0509374.pdf,AI,arXiv,Lush spaces and numerical index 1 (q13)
+https://arxiv.org/pdf/1103.1282,lush_1103.1282.pdf,AI,arXiv,Lushness and numerical index (q13)
+https://arxiv.org/pdf/2112.12713,fcm_implicit_bias_2112.12713.pdf,AI,arXiv,FCM Nápoles et al. (relacionado con q16 q17)
+https://repository.tilburguniversity.edu/server/api/core/bitstreams/661eb85f-7cd4-4723-84c2-d3c239763781/content,fcm_tilburg_661eb85f.pdf,AI,Tilburg repository,FCM (verificar título al descargar)
+https://scipub.euro-fusion.org/wp-content/uploads/eurofusion/WPENSCPR18_19806_submitted-4.pdf,dones_li_loop_purification_2018.pdf,DONES,EUROfusion preprint,Lithium loop and purification system preliminary design (q5-q8)
+https://publikationen.bibliothek.kit.edu/1000185942/168333737,dones_lithium_systems_nf2025.pdf,DONES,KIT open access,The lithium systems of the IFMIF-DONES facility (ICS)
+https://publikationen.bibliothek.kit.edu/1000157383/150593835,dones_nitrogen_trap_net2023.pdf,DONES,KIT open access,Nitrogen trap and Li purification (q7)
+https://publikationen.bibliothek.kit.edu/1000174828/154977142,dones_ics_status_slides.pdf,DONES,KIT open access,Impurity Control System status
+https://publikationen.bibliothek.kit.edu/1000124689/89938803,dones_be7_assessment_kit.pdf,DONES,KIT open access,Be-7 inventory and deposition (q3 q4 q5)
+https://publikationen.bibliothek.kit.edu/1000186278/168770142,dones_kit_1000186278.pdf,DONES,KIT open access,Be-7 y tritio (verificar título)
+https://conferences.iaea.org/event/392/papers/36142/files/13648-FEC2025_manuscript_Yuefeng_Qiu_DONES_neutronics_v0.2.pdf,dones_neutronics_fec2025.pdf,DONES,IAEA FEC 2025,DONES neutronics Be-7 and tritium
+https://conferences.iaea.org/event/392/papers/36101/files/13392-IAEA_FEC_2025_Manuscript_kenjo_01.pdf,dones_kenjo_fec2025.pdf,DONES,IAEA FEC 2025,Li loop tritium and Li-oil heat exchanger
+https://agenda.enea.it/event/60/contributions/905/contribution.pdf,dones_soft2018_enea_905.pdf,DONES,ENEA,SOFT 2018 tritium production
+https://indico.jacow.org/event/95/contributions/13969/attachments/2372/8717/WEP6074_edited_version.pdf,dones_otr_fluorescence_ipac26.pdf,DONES,JACoW CC BY,Beam on target diagnostics OTR and fluorescence (q1)
+https://jacow.org/ibic2016/papers/mopg32.pdf,dones_diagnostics_ibic2016.pdf,DONES,JACoW CC BY,DONES accelerator diagnostics interceptive and non-interceptive (q2)
+https://jacow.org/ibic2019/papers/MOPP042.pdf,dones_hebt_diagnostics_ibic2019.pdf,DONES,JACoW CC BY,HEBT diagnostics near the lithium target
+https://publikationen.bibliothek.kit.edu/1000172153/153391828,dones_target_diagnostics_hb2023.pdf,DONES,KIT open access,Target and irradiation diagnostics (HB2023)
+https://accelconf.web.cern.ch/ipac2023/pdf/THPA002.pdf,cern_otr_hollow_beam_ipac2023.pdf,distractores,JACoW CC BY,OTR imaging at CERN (distractor cercano a q1)

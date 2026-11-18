@@ -1,0 +1,152 @@
+[
+  {
+    "id": "1",
+    "domain": "DONES",
+    "question": "Both OTR and scintillation are proposed for experimental beam imaging diagnostics, but they produce photons by different mechanisms. Which p",
+    "gold_texts": []
+  },
+  {
+    "id": "2",
+    "domain": "DONES",
+    "question": "What does a \"destructive\" beam diagnostic do to the beam it measures?",
+    "gold_texts": []
+  },
+  {
+    "id": "3",
+    "domain": "DONES",
+    "question": "What would be the radioactive decay constant of Be7 if we round its half life in days to the nearest integer?",
+    "gold_texts": []
+  },
+  {
+    "id": "4",
+    "domain": "DONES",
+    "question": "At what point in time does Be7 stop being the main source of activity in the Heat Exchanger of DONES?",
+    "gold_texts": []
+  },
+  {
+    "id": "5",
+    "domain": "DONES",
+    "question": "How are the inventories of Be7 and Tritium calculated for DONES Li loop?",
+    "gold_texts": []
+  },
+  {
+    "id": "6",
+    "domain": "DONES",
+    "question": "In the context of IFMIF-DONES, what is the approximate volumetric flow rate in the primary heat exchanger?",
+    "gold_texts": []
+  },
+  {
+    "id": "7",
+    "domain": "DONES",
+    "question": "What is the temperature of the on-line Nitrogen trap in IFMIF-DONES?",
+    "gold_texts": []
+  },
+  {
+    "id": "8",
+    "domain": "DONES",
+    "question": "What is the bypass ratio of the ICS Branch of the DONES Li loop?",
+    "gold_texts": []
+  },
+  {
+    "id": "9",
+    "domain": "DONES",
+    "question": "What will be volumen of the main building in the IFMIF DONES facilities?",
+    "gold_texts": []
+  },
+  {
+    "id": "10",
+    "domain": "DONES",
+    "question": "In the context of IFMIF DONES, when would be required hands-on or remote handling maintenance in areas with neutronics activity?",
+    "gold_texts": []
+  },
+  {
+    "id": "11",
+    "domain": "AI Papers",
+    "question": "In the paper 'OneSearch: A preliminary exploration of the unified end-to-end generative framework for e-commerce search'. Comparing RQ-VAE t",
+    "gold_texts": []
+  },
+  {
+    "id": "12",
+    "domain": "AI Papers",
+    "question": "In ONB-MACF, is the experimental comparison unfair because the proposed method enforces immutability constraints (via projections) while the",
+    "gold_texts": []
+  },
+  {
+    "id": "13",
+    "domain": "AI Papers",
+    "question": "In the context of properties of lush spaces and applications to Banach spaces with numerical index 1, on Theorem 4.1 \"Let $X$ be a Banach sp",
+    "gold_texts": []
+  },
+  {
+    "id": "14",
+    "domain": "AI Papers",
+    "question": "In REVEL framework, the authors say it is very important to have a metric between 0 and 1. Why is this?",
+    "gold_texts": []
+  },
+  {
+    "id": "15",
+    "domain": "AI Papers",
+    "question": "In the paper WinStat. Considering how the window size heuristic is determined based on sequence length: if we have a sequence length of $L=5",
+    "gold_texts": []
+  },
+  {
+    "id": "16",
+    "domain": "AI Papers",
+    "question": "In the context of classic fuzzy cognitive maps. Why do relative activation values improve classification accuracy?",
+    "gold_texts": []
+  },
+  {
+    "id": "17",
+    "domain": "AI Papers",
+    "question": "In Dynamic Behavior of Fuzzy Cognitive Maps. Why study the covering for stable FCMs using the knowledge of the weights? Summarize in a small",
+    "gold_texts": []
+  },
+  {
+    "id": "18",
+    "domain": "AI Papers",
+    "question": "Given the mechanisms attributed to the fairness by brute force phenomenon as described in \"Fairness by Brute Force: Dissatisfaction-Driven O",
+    "gold_texts": []
+  },
+  {
+    "id": "19",
+    "domain": "AI Papers",
+    "question": "In WinStat paper. What type of normalized weighting mechanism has been used to adjust the $\\tilde{w}$ weights of the WinStatFlex model to pr",
+    "gold_texts": []
+  },
+  {
+    "id": "20",
+    "domain": "AI Papers",
+    "question": "In ZeroDiff (solidified visual-semantic correlation in zero-shot learning), what is the purpose of the other Diffusion-based Representation ",
+    "gold_texts": []
+  },
+  {
+    "id": "21",
+    "domain": "AI Papers",
+    "question": "In the context of method 'ThinkMore' in hierarchical neuro-symbolic search with transformer re-evaluation for efficient chess play. Why are ",
+    "gold_texts": []
+  },
+  {
+    "id": "22",
+    "domain": "AI Papers",
+    "question": "In SimCLR's paper, what is the main weakness of using a single fixed data augmentation?",
+    "gold_texts": []
+  },
+  {
+    "id": "23",
+    "domain": "AI Papers",
+    "question": "In the context of federated learning, what are the differences between $(\\alpha,f)$-byzantine resilience method and other approaches?",
+    "gold_texts": []
+  },
+  {
+    "id": "24",
+    "domain": "AI Papers",
+    "question": "According to the taxonomy and definition framework of \"General Purpose Artificial Intelligence Systems: Definition and Taxonomy\", what speci",
+    "gold_texts": []
+  },
+  {
+    "id": "25",
+    "domain": "AI Papers",
+    "question": "In the paper of Mamba, why Linear Time Invariance models struggle with selective Copying?",
+    "gold_texts": []
+  }
+]
