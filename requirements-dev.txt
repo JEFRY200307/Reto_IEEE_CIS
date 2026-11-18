@@ -1,0 +1,20 @@
+# Solo para desarrollo (laptop y sesiones de AWS). NO viajan en el zip.
+# El sistema en línea usa únicamente requirements-runtime.txt (entorno de Codabench).
+
+# Pruebas y calidad
+pytest>=8
+ruff>=0.6
+mypy>=1.10
+
+# Calibración CMA-ES (offline/calibrate_cmaes.py)
+cma>=3.3
+
+# Para correr las pruebas en la laptop sin el entorno completo (versiones del runtime cuando es posible)
+numpy>=1.26
+scipy>=1.11
+pyyaml>=6
+pydantic>=2.5
+pymupdf>=1.24
+pdfplumber>=0.11
+rapidfuzz>=3
+ftfy>=6
