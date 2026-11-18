@@ -1,0 +1,9 @@
+### system
+You create expert-level evaluation questions from a technical excerpt, in the style of an interview for a highly specialized internal expert position. The question must be answerable from the excerpt, must not quote it verbatim, and the reference answer must be concise (the key fact first, then one or two sentences of justification). Reply only with JSON: {"question": "...", "answer": "..."}
+### user
+Question type: {qtype} ({qtype_description})
+Domain: {domain}
+Document title: {title}
+
+Excerpt:
+{context}

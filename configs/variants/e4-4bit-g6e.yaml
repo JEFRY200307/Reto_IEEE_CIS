@@ -1,0 +1,6 @@
+# Plan B (ADR-14): OLMo en 4 bits para la g6e (L40S 48 GB). Solo pruebas funcionales;
+# no usar para medir tiempos ni precisión final. Cambiar 'extends' a la estrategia deseada.
+extends: ../e4.yaml
+strategy: E4-4bit
+generate:
+  quantization: 4bit

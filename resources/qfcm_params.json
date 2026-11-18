@@ -1,0 +1,28 @@
+{
+  "_nota": "Pesos de experto del q-FCM (E6), dentro de los rangos de 'bounds'. offline/calibrate_cmaes.py los reemplaza por los calibrados.",
+  "phi": 0.7,
+  "lam": 3.0,
+  "bias": 1.1,
+  "iterations": 10,
+  "edges": {
+    "C1->C6": 0.65,
+    "C2->C6": 0.30,
+    "C3->C6": 0.30,
+    "C4->C6": 0.45,
+    "C5->C6": 0.55,
+    "C1->C5": 0.0
+  },
+  "bounds": {
+    "C1->C6": [0.4, 0.9],
+    "C2->C6": [0.1, 0.5],
+    "C3->C6": [0.1, 0.5],
+    "C4->C6": [0.2, 0.7],
+    "C5->C6": [0.3, 0.8],
+    "C1->C5": [0.0, 0.3]
+  },
+  "out_mf": {
+    "incorrect": [0.0, 0.0, 0.30, 0.45],
+    "ambiguous": [0.30, 0.45, 0.60, 0.75],
+    "correct": [0.60, 0.75, 1.0, 1.0]
+  }
+}

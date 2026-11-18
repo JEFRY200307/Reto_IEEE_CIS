@@ -1,0 +1,8 @@
+# E6 con OWA y q-FCM calibrados en la misma sesión (offline/calibrate_cmaes.py --save-to resources/calibrated).
+extends: ../e6.yaml
+strategy: E6-calibrado
+fusion:
+  owa_params: resources/calibrated/owa_params.json
+verify:
+  qfcm:
+    params_file: resources/calibrated/qfcm_params.json

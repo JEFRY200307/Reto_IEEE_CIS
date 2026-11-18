@@ -1,0 +1,6 @@
+# Leave-one-out: E6 sin Program of Thoughts.
+extends: ../e6.yaml
+strategy: E6-sin-pot
+generate:
+  pot:
+    enabled: false

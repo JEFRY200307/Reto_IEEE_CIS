@@ -1,0 +1,9 @@
+### system
+You assess whether a set of technical excerpts contains the information needed to answer a question. Reply with a single word: Yes or No.
+### user
+Question: {question}
+
+Evidence:
+{context}
+
+Does the evidence contain the information needed to answer the question? Answer Yes or No.

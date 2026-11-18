@@ -1,0 +1,13 @@
+# E6 — Verificación con q-FCM (CI 2) calibrado con CMA-ES (CI 3), con juez OLMo s5. Cambia: verify.
+extends: e5.yaml
+strategy: E6
+description: Umbrales reemplazados por un mapa cognitivo difuso cuasi-no lineal con s1-s5
+
+verify:
+  decider: qfcm
+  signals: [s1, s2, s3, s4, s5]
+  judge_topk: 3
+  judge_max_tokens: 2000
+  qfcm:
+    params_file: resources/qfcm_params.json
+    iterations: 10

@@ -1,0 +1,11 @@
+# Valores comunes a todas las estrategias. Cada eN.yaml hereda (extends) de la anterior
+# y cambia solo los bloques de su salto (ADR-02, SPEC-025).
+strategy: base
+description: Valores comunes
+
+runtime:
+  t_fast_s: 3000        # 50 min: modo rápido (ADR-07)
+  t_emergency_s: 3360   # 56 min: modo emergencia
+  seed: 42
+  parallel_init: true   # OLMo se carga en paralelo con la ingesta (ADR-04)
+  oom_context_factor: 0.5

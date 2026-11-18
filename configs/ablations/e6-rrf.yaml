@@ -1,0 +1,5 @@
+# Leave-one-out: E6 con RRF en lugar de OWA.
+extends: ../e6.yaml
+strategy: E6-rrf
+fusion:
+  method: rrf

@@ -1,0 +1,20 @@
+{
+  "_nota": "Términos característicos de cada dominio. Pertenencia = 1 - exp(-coincidencias / k).",
+  "k": 4.0,
+  "DONES": [
+    "IFMIF", "DONES", "IFMIF-DONES", "EVEDA", "LIPAc", "lithium", "Li loop", "lithium loop", "lithium target",
+    "deuteron", "deuterons", "accelerator", "linac", "RFQ", "SRF", "HEBT", "MEBT", "LEBT", "beam", "beam dump",
+    "neutron", "neutrons", "irradiation", "test cell", "HFTM", "test module", "fusion", "DEMO", "tritium",
+    "Be7", "Be-7", "beryllium", "activation", "radiological", "shielding", "remote handling", "heat exchanger",
+    "quench tank", "impurity", "nitrogen trap", "hot trap", "cold trap", "dpa", "Granada", "main building",
+    "OTR", "scintillation", "beam diagnostics", "decay", "half-life", "dose rate", "cryoplant", "cooling"
+  ],
+  "AI": [
+    "neural", "neural network", "deep learning", "machine learning", "learning", "dataset", "datasets",
+    "training", "transformer", "attention", "embedding", "benchmark", "classification", "classifier",
+    "algorithm", "fuzzy", "fuzzy cognitive map", "FCM", "optimization", "evolutionary", "reinforcement",
+    "language model", "LLM", "generative", "diffusion", "contrastive", "SimCLR", "Mamba", "state space",
+    "federated", "Byzantine", "fairness", "text-to-image", "zero-shot", "few-shot", "GPAIS", "accuracy",
+    "loss function", "gradient", "inference", "time series", "forecasting", "window", "Banach", "theorem"
+  ]
+}

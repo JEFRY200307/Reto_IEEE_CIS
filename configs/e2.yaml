@@ -1,0 +1,17 @@
+# E2 — Recuperación híbrida: BM25 + denso con RRF, glosario de DONES y corrección de erratas.
+# Cambia: retrieval, fusion.
+extends: e1.yaml
+strategy: E2
+description: BM25 + denso (top-50) fusionados con RRF; expansión con glosario y erratas
+
+retrieval:
+  retrievers: [bm25, dense]
+  top_k: 50
+  glossary: resources/glossary_dones.json
+  typo_fix: true
+  typo_threshold: 90
+
+fusion:
+  method: rrf
+  rrf_k: 60
+  top_n: 50

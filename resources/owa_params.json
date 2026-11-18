@@ -1,0 +1,7 @@
+{
+  "_nota": "Valores iniciales de experto (E5). offline/calibrate_cmaes.py los reemplaza por los calibrados.",
+  "norm": "minmax",
+  "a": {"bm25": 8.0, "dense": 8.0},
+  "c": {"bm25": 0.5, "dense": 0.5},
+  "w": [0.4, 0.6]
+}

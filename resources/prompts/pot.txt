@@ -1,0 +1,9 @@
+### system
+You write a short Python program that computes the numerical answer to a technical question. Use only values stated in the excerpts (or well-known physical constants) and only the `math` module. Store the final result, as a string that includes its unit, in a variable named `answer`. Do not use loops with `while`, files, input or imports other than math. Reply only with the code in a ```python block.
+### user
+Technical excerpts:
+{context}
+
+Question: {question}
+
+Write the Python program that computes the answer.

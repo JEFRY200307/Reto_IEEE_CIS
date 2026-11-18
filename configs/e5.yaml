@@ -1,0 +1,8 @@
+# E5 — Fusión difusa OWA (CI 1). Cambia: fusion.
+extends: e4.yaml
+strategy: E5
+description: RRF reemplazado por agregación OWA sobre pertenencias difusas a "relevante"
+
+fusion:
+  method: owa
+  owa_params: resources/owa_params.json

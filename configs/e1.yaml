@@ -1,0 +1,36 @@
+# E1 — Preparación optimizada: extracción, limpieza, chunking padre-hijo, bge-base y salida concisa.
+# Cambia: ingest, index, context, generate.
+extends: e0.yaml
+strategy: E1
+description: PyMuPDF en paralelo + limpieza + secciones padre-hijo + bge-base en GPU + top-5 (4k) + prompt por dominio
+
+ingest:
+  extractor: pymupdf
+  tables: true
+  captions: true
+  clean_steps: [ftfy, dehyphen, headers, references, whitespace]
+  chunker: section
+  child_chars: 600
+  parent_chars: 2000
+  overlap: 100
+  enrich: true
+  workers: 30
+
+index:
+  embedder: models/embedder          # BAAI/bge-base-en-v1.5 en fp16
+  device: auto
+  fp16: true
+  batch_size: 256
+  query_instruction: "Represent this sentence for searching relevant passages: "
+  max_seq_length: 512
+
+context:
+  mode: topk
+  top_k: 5
+  max_tokens: 4000
+  use_parent: true
+  neighbors: 0
+
+generate:
+  style: domain
+  max_new_tokens: 300

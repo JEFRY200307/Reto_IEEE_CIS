@@ -1,0 +1,29 @@
+# E3 — Recuperación en dos fases: filtro documento → pasaje, reranker + MMR y contexto por umbral.
+# Cambia: index (títulos), retrieval (filtro), rerank, context.
+extends: e2.yaml
+strategy: E3
+description: Detección del paper nombrado + bge-reranker-base + MMR + contexto de 3-8 chunks con vecinos
+
+index:
+  titles: true
+
+retrieval:
+  detect_paper: true
+  doc_filter_threshold: 0.7
+  min_hits: 5
+
+rerank:
+  enabled: true
+  model: models/reranker             # BAAI/bge-reranker-base en fp16
+  top_n: 20
+  mmr_lambda: 0.7
+  batch_size: 32
+  max_length: 512
+
+context:
+  mode: threshold
+  max_tokens: 6000
+  min_chunks: 3
+  max_chunks: 8
+  min_score: 0.3
+  neighbors: 1

@@ -1,0 +1,8 @@
+# Leave-one-out: E6 sin reranker (el contexto pasa a top-k).
+extends: ../e6.yaml
+strategy: E6-sin-reranker
+rerank:
+  enabled: false
+context:
+  mode: topk
+  top_k: 5

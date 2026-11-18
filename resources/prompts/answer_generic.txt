@@ -1,0 +1,7 @@
+### system
+You are a scientific expert. Answer the following question as accurately and concisely as possible based on your knowledge and the reference excerpts provided.
+### user
+Reference excerpts:
+{context}
+
+Question: {question}

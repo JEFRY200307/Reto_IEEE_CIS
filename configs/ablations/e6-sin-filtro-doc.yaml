@@ -1,0 +1,7 @@
+# Leave-one-out: E6 sin filtro documento → pasaje.
+extends: ../e6.yaml
+strategy: E6-sin-filtro-doc
+index:
+  titles: false
+retrieval:
+  detect_paper: false

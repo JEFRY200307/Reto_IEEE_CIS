@@ -1,0 +1,6 @@
+# E5 con los parámetros OWA calibrados en la misma sesión (offline/calibrate_cmaes.py --save-to resources/calibrated).
+# Si la calibración no se aceptó, el archivo no existe y se usan los valores de experto (aviso en el log).
+extends: ../e5.yaml
+strategy: E5-calibrado
+fusion:
+  owa_params: resources/calibrated/owa_params.json

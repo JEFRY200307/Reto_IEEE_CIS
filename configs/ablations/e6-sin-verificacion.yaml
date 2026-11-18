@@ -1,0 +1,7 @@
+# Leave-one-out: E6 sin verificación (equivale a E5 sin umbrales).
+extends: ../e6.yaml
+strategy: E6-sin-verificacion
+verify:
+  enabled: false
+  decider: none
+  signals: [s1, s2, s3, s4]

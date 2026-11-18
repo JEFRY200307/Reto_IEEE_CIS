@@ -1,0 +1,49 @@
+# E0 — Base estándar: el RAG del starter kit (02_rag), reproducido con el código de dsqa.
+extends: base.yaml
+strategy: E0
+description: Docling + chunks fijos de 800 caracteres + MiniLM en CPU + hasta 10k tokens + prompt genérico
+
+ingest:
+  extractor: docling
+  tables: false
+  captions: false
+  clean_steps: []
+  chunker: fixed
+  fixed_chars: 800
+  fixed_overlap: 150
+  enrich: false
+  workers: 4            # Docling ya usa varios hilos por documento
+
+index:
+  embedder: models/embedder-minilm   # sentence-transformers/all-MiniLM-L6-v2
+  device: cpu
+  fp16: false
+  batch_size: 64
+  query_instruction: ""
+  max_seq_length: 256
+
+retrieval:
+  retrievers: [dense]
+  top_k: 50
+
+fusion:
+  method: none
+
+rerank:
+  enabled: false
+
+verify:
+  enabled: false
+  decider: none
+
+context:
+  mode: budget
+  max_tokens: 10000
+  use_parent: false
+  neighbors: 0
+
+generate:
+  style: generic
+  max_new_tokens: 2048
+  pot:
+    enabled: false

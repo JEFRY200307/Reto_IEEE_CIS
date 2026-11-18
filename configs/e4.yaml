@@ -1,0 +1,22 @@
+# E4 — Verificación clásica: señales s1-s4 + umbrales fijos + 1 reintento + Program of Thoughts.
+# Cambia: verify, generate (PoT).
+extends: e3.yaml
+strategy: E4
+description: Verificación de la evidencia con umbrales (estilo CRAG), reintento y PoT en preguntas numéricas
+
+verify:
+  enabled: true
+  decider: threshold
+  signals: [s1, s2, s3, s4]
+  max_retries: 1
+  ambiguous_extra_chunks: 2
+  threshold:
+    tau_high: 0.7
+    tau_low: 0.3
+    kappa: 0.5
+
+generate:
+  pot:
+    enabled: true
+    timeout_s: 5
+    max_new_tokens: 256
