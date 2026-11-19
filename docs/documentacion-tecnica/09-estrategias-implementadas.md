@@ -102,21 +102,31 @@ Cambia solo `verify`.
 
 ## 9.4 Validación local de la recuperación
 
-`eval/bench/gold_chunks.json` marca el pasaje que responde 14 de las 25 preguntas de muestra dentro de los 27 PDFs públicos de `data/public_pdfs/`. Las otras 11 dependen de documentos que no están en el banco local (WinStat, ThinkMore, *Fairness by Brute Force*, ONB-MACF…) o de datos en figuras. Con eso, `eval/run_local.py --retrieval-only` mide recall@k y MRR por estrategia sin OLMo; los resultados quedan en `experiments/runs/recall-local/`.
+`eval/bench/gold_chunks.json` marca el pasaje que responde **20 de las 25 preguntas de muestra** dentro de los 32 PDFs públicos de `data/public_pdfs/` (los 27 originales más WinStat, ONB-MACF, *lush spaces* y dos documentos de DONES sobre mantenimiento remoto y el edificio principal). Las 5 restantes no tienen gold:
 
-### Resultados (18 nov 2026)
+| # | Motivo |
+|---|---|
+| 1 | Falta el documento de DONES que compara OTR y centelleo (el de IBIC 2025 sobre diagnósticos solo menciona OTR) |
+| 4 | Falta el documento con la evolución de radionúclidos en el intercambiador ("Fig. 8, basic corrosion model") |
+| 17 | *Unveiling the Dynamic Behavior of FCMs* solo está en ResearchGate o academia.edu (descarga manual) |
+| 18 | *Fairness by Brute Force* no está publicado |
+| 21 | *ThinkMore* no está publicado |
 
-Medición sin OLMo, con el bge y el reranker reales en CPU, sobre las 14 preguntas con gold (6 DONES, 8 IA) y las estrategias **sin modificar**:
+La #9 tiene gold parcial (longitud y número de plantas del edificio principal, sin ancho ni alto). Con eso, `eval/run_local.py --retrieval-only` mide recall@k y MRR por estrategia sin OLMo.
+
+### Resultados (19 nov 2026)
+
+Medición sin OLMo, con el bge y el reranker reales en CPU, sobre las 20 preguntas con gold (8 DONES, 12 IA) y las estrategias **sin modificar**; resultados en `experiments/runs/recall-local-20/`:
 
 ```bash
-python eval/run_local.py --configs configs/e1.yaml configs/e2.yaml configs/e3.yaml --corpus data/public_pdfs --retrieval-only --out experiments/runs/recall-local --ids 2 3 5 6 7 8 11 14 16 20 22 23 24 25
+python eval/run_local.py --configs configs/e1.yaml configs/e2.yaml configs/e3.yaml --corpus data/public_pdfs --retrieval-only --out experiments/runs/recall-local-20 --ids 2 3 5 6 7 8 9 10 11 12 13 14 15 16 19 20 22 23 24 25
 ```
 
 | Estrategia | Recall@1 | **Recall@5** | Recall@20 | MRR | DONES r@5 | IA r@5 |
 |---|---|---|---|---|---|---|
-| E1 | 14 % | **29 %** | 50 % | 0,21 | 33 % | 25 % |
-| E2 | 21 % | **36 %** | 57 % | 0,27 | 50 % | 25 % |
-| E3 | 7 % | **29 %** | 43 % | 0,16 | 33 % | 25 % |
+| E1 | 10 % | **25 %** | 50 % | 0,18 | 25 % | 25 % |
+| E2 | 15 % | **30 %** | 65 % | 0,22 | 38 % | 25 % |
+| E3 | 20 % | **45 %** | 55 % | 0,30 | 50 % | 42 % |
 
 Puesto del pasaje correcto en la lista final de cada estrategia ("—" = fuera de la lista: 50 candidatos en E1 y E2, 20 en E3 tras el reranker):
 
@@ -125,19 +135,25 @@ Puesto del pasaje correcto en la lista final de cada estrategia ("—" = fuera d
 | #3 Be-7 (constante de desintegración) | 1 | 1 | 4 |
 | #6 Caudal del intercambiador | 2 | 1 | 1 |
 | #7 Trampa de nitrógeno | 17 | 4 | — |
-| #8 Bypass del ICS | 13 | 10 | 14 |
+| #8 Bypass del ICS | 13 | 8 | 15 |
+| #9 Edificio principal (parcial) | 30 | 15 | 1 |
+| #10 Mantenimiento remoto | 7 | 7 | 1 |
+| #13 *Lush spaces* | 36 | 18 | 1 |
+| #15 WinStat (tamaño de ventana) | 3 | 3 | 3 |
+| #19 WinStat (pesos softmax) | 20 | 15 | 2 |
 | #22 SimCLR | — | 14 | — |
 | #23 (α,f)-Byzantine | 5 | 4 | 8 |
 | #24 GPAIS | 1 | 1 | 4 |
-| #25 Mamba | 6 | 6 | 2 |
-| #2, #5, #11, #14, #16, #20 | — | — | — |
+| #25 Mamba | 6 | 8 | 2 |
+| #2, #5, #11, #12, #14, #16, #20 | — | — | — |
 
 **Lectura:**
-- **E2 mejora a E1**, sobre todo en DONES (recall@5 de 33 % a 50 %), como se esperaba de BM25 con siglas y valores exactos.
-- **E3 no mejora a E2** en esta muestra: el reranker de propósito general reordena peor en varias preguntas (#3, #7, #24) y mejora otras (#25). E3 además deja solo 20 candidatos tras el reranker y el filtro de duplicados.
-- **6 de las 14 preguntas no encuentran su pasaje en ninguna estrategia.** Hallazgo: en PDFs a dos columnas, PyMuPDF (`sort=True`) a veces intercala líneas de ambas columnas, lo que ensucia los fragmentos; afecta por igual a E1-E6.
+- **E2 mejora a E1** (recall@5 de 25 % a 30 %, recall@20 de 50 % a 65 %), sobre todo en DONES, como se esperaba de BM25 con siglas y valores exactos.
+- **E3 mejora a E2 en lo que llega al LLM**: recall@5 de 30 % a 45 % y MRR de 0,22 a 0,30. El reranker sube el pasaje correcto al puesto 1-2 en #9, #10, #13, #19 y #25. Con las 14 preguntas iniciales parecía no aportar; con 20 la tendencia se invierte.
+- **E3 pierde cobertura en el top 20** (65 % → 55 %): el filtro por paper y el corte a 20 candidatos dejan fuera #7 y #22, y baja #3 y #24 del puesto 1 al 4.
+- **7 de las 20 preguntas no encuentran su pasaje en ninguna estrategia.** Hallazgo: en PDFs a dos columnas, PyMuPDF (`sort=True`) a veces intercala líneas de ambas columnas, lo que ensucia los fragmentos; afecta por igual a E1-E6.
 
-**Límites:** con 14 preguntas cada una vale ~7 puntos (E2 vs. E3 es una sola pregunta de diferencia); el banco local es una aproximación del corpus privado de Codabench. Estas cifras sirven para **explicar** los scores de Codabench, no para reemplazarlos.
+**Límites:** con 20 preguntas cada una vale 5 puntos (E2 vs. E3 en recall@5 son 3 preguntas); los 5 PDFs añadidos cambian ligeramente algunos puestos respecto a la medición con 27 PDFs (#8, #25). El banco local es una aproximación del corpus privado de Codabench: estas cifras sirven para **explicar** los scores de Codabench, no para reemplazarlos.
 
 ## 9.5 Registro de envíos
 

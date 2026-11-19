@@ -72,15 +72,19 @@
     "id": "9",
     "domain": "DONES",
     "question": "What will be volumen of the main building in the IFMIF DONES facilities?",
-    "gold_texts": [],
-    "nota": "sin gold: dimensiones del edificio principal: documento ausente"
+    "gold_texts": [
+      "The MB is a 159 m length, four storeys concrete volume"
+    ],
+    "nota": "parcial: dones_main_building_concrete (longitud y 4 plantas; sin ancho ni alto)"
   },
   {
     "id": "10",
     "domain": "DONES",
     "question": "In the context of IFMIF DONES, when would be required hands-on or remote handling maintenance in areas with neutronics activity?",
-    "gold_texts": [],
-    "nota": "sin gold: umbrales 10 μSv/h y 100 mSv/h: documento ausente"
+    "gold_texts": [
+      "hands-on maintenance is assumed free for areas below 10"
+    ],
+    "nota": "dones_remote_maintenance_nf2025 (texto casi idéntico a la referencia)"
   },
   {
     "id": "11",
@@ -95,15 +99,19 @@
     "id": "12",
     "domain": "AI Papers",
     "question": "In ONB-MACF, is the experimental comparison unfair because the proposed method enforces immutability constraints (via projections) while the",
-    "gold_texts": [],
-    "nota": "sin gold: paper ONB-MACF no descargado"
+    "gold_texts": [
+      "In case there are immutable features, instead of the opposing balls and their centres, their projections"
+    ],
+    "nota": "onb_macf_2405.12326 (arXiv)"
   },
   {
     "id": "13",
     "domain": "AI Papers",
     "question": "In the context of properties of lush spaces and applications to Banach spaces with numerical index 1, on Theorem 4.1 \"Let $X$ be a Banach sp",
-    "gold_texts": [],
-    "nota": "sin gold: paper de 'lush spaces' (Studia Math. 2009) distinto a los descargados"
+    "gold_texts": [
+      "is dense in SY × SY and has every element repeated"
+    ],
+    "nota": "lush_properties_studia_2009 (impan.pl, sitio oficial del reto)"
   },
   {
     "id": "14",
@@ -118,8 +126,10 @@
     "id": "15",
     "domain": "AI Papers",
     "question": "In the paper WinStat. Considering how the window size heuristic is determined based on sequence length: if we have a sequence length of $L=5",
-    "gold_texts": [],
-    "nota": "sin gold: paper WinStat bloqueado (403), falta descargarlo a mano"
+    "gold_texts": [
+      "roughly one quarter to one third of the input sequence length"
+    ],
+    "nota": "winstat_make_8_1_7 (MDPI, descargado a mano)"
   },
   {
     "id": "16",
@@ -135,21 +145,23 @@
     "domain": "AI Papers",
     "question": "In Dynamic Behavior of Fuzzy Cognitive Maps. Why study the covering for stable FCMs using the knowledge of the weights? Summarize in a small",
     "gold_texts": [],
-    "nota": "sin gold: paper 'Dynamic Behavior of FCMs' no descargado"
+    "nota": "sin gold: 'Unveiling the Dynamic Behavior of FCMs' solo en ResearchGate/academia.edu (bloqueado al descargar automáticamente)"
   },
   {
     "id": "18",
     "domain": "AI Papers",
     "question": "Given the mechanisms attributed to the fairness by brute force phenomenon as described in \"Fairness by Brute Force: Dissatisfaction-Driven O",
     "gold_texts": [],
-    "nota": "sin gold: paper 'Fairness by Brute Force' no encontrado"
+    "nota": "sin gold: 'Fairness by Brute Force' no está publicado (no aparece en Google ni Scholar)"
   },
   {
     "id": "19",
     "domain": "AI Papers",
     "question": "In WinStat paper. What type of normalized weighting mechanism has been used to adjust the $\\tilde{w}$ weights of the WinStatFlex model to pr",
-    "gold_texts": [],
-    "nota": "sin gold: paper WinStat bloqueado (403), falta descargarlo a mano"
+    "gold_texts": [
+      "ensures normalized, sum-one trainable weights"
+    ],
+    "nota": "winstat_make_8_1_7 (MDPI, descargado a mano)"
   },
   {
     "id": "20",
@@ -165,7 +177,7 @@
     "domain": "AI Papers",
     "question": "In the context of method 'ThinkMore' in hierarchical neuro-symbolic search with transformer re-evaluation for efficient chess play. Why are ",
     "gold_texts": [],
-    "nota": "sin gold: paper ThinkMore no encontrado"
+    "nota": "sin gold: 'ThinkMore' no está publicado (no aparece en Google)"
   },
   {
     "id": "22",
